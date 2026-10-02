@@ -1,0 +1,286 @@
+/* ==========================================================================
+   LIGHT MODE DESIGN SYSTEM VARIABLES
+   ========================================================================== */
+   :root {
+    --primary-color: #000000;
+    --bg-light: #ffffff;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --border-color: rgba(0, 0, 0, 0.12);
+    --text-dark: #0f172a;
+    --text-light: #64748b;
+    --accent-light: #e2fbaf; /* Signature Volt Green */
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body, html, #root {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: var(--font-family);
+    background-color: var(--bg-light) !important;
+    color: var(--text-dark);
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  .app-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-light);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  /* ==========================================================================
+     VIEWPORT MATRIX & STAGE
+     ========================================================================== */
+  .viewport-matrix {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .stage-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+  
+  .zoom-layer {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    aspect-ratio: 1200 / 848;
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform-origin 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .pattern-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    display: block;
+  }
+  
+  /* ==========================================================================
+     HOTSPOT TARGET PINS
+     ========================================================================== */
+  .hotspot-pin {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+  }
+  
+  .pin-core {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.25s ease;
+  }
+  
+  .pin-pulse {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(226, 251, 175, 0.6);
+    animation: pulse-ring 2s infinite ease-in-out;
+    pointer-events: none;
+  }
+  
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(0.6);
+      opacity: 0.9;
+    }
+    100% {
+      transform: scale(1.6);
+      opacity: 0;
+    }
+  }
+  
+  .hotspot-pin:hover .pin-core,
+  .hotspot-pin.active .pin-core {
+    background: var(--accent-light);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: scale(1.2);
+  }
+  
+  .pin-tooltip {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: var(--primary-color);
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  
+  .hotspot-pin:hover .pin-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(4px);
+  }
+  
+  /* ==========================================================================
+     GLASS DETAIL CARD & OPTIONAL IMAGE STYLES
+     ========================================================================== */
+  .glazed-glass-card {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    width: 340px;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.12);
+    z-index: 40;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .glazed-glass-card h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.3;
+  }
+  
+  .close-btn {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    color: var(--text-dark);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s ease;
+  }
+  
+  .close-btn:hover {
+    background: #f1f5f9;
+  }
+  
+  /* 🎯 OPTIONAL INFO CARD IMAGE CONTAINER */
+  .card-image-container {
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    border: 1px solid var(--border-color);
+    background: #ffffff;
+  }
+  
+  .card-info-image {
+    width: 100%;
+    height: auto;
+    max-height: 180px;
+    object-fit: contain;
+    display: block;
+  }
+  
+  .card-desc {
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--text-light);
+  }
+  
+  /* ==========================================================================
+     BOTTOM CALLOUT HUD
+     ========================================================================== */
+  .bottom-hud-container {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    pointer-events: none;
+  }
+  
+  .glass-callout {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-dark);
+    letter-spacing: 0.5px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
