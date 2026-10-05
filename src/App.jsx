@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./styles.css";
 
 const PATTERN_IMAGE_URL =
-  "https://raw.githubusercontent.com/kyrastratford/On_3D-Assets/main/pattern-blueprint.png";
+  "https://raw.githubusercontent.com/kyrastratford/On_3D-Assets/main/original-shell-pattern-blueprint.png";
 
 const HOTSPOTS = [
   {
